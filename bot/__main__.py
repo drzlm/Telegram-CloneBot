@@ -14,19 +14,19 @@ REPO_LINK = "https://github.com/jagrit007/Telegram-CloneBot"
 
 @run_async
 def start(update, context):
-    sendMessage("Hello! Please send me a Google Drive Shareable Link to Clone to your Drive!" \
-        "\nSend /help for checking all available commands.",
+    sendMessage("**စတင်သုံးနိုင်ပါပြီ။ သိရှိလိုသောအချက်ရှိလျှင် @drivetalk group တွင် မေးမြန်းနိုင်ပါတယ်။**" \
+        "\n/help နှိပ်ပြီး အသုံးပြုနည်း လေ့လာပါ။",
     context.bot, update, 'Markdown')
     # ;-;
 
 @run_async
 def helper(update, context):
-    sendMessage("Here are the available commands of the bot\n\n" \
-        "*Usage:* `/clone <link> [DESTINATION_ID]`\n*Example:* \n1. `/clone https://drive.google.com/drive/u/1/folders/0AO-ISIXXXXXXXXXXXX`\n2. `/clone 0AO-ISIXXXXXXXXXXXX`" \
-            "\n*DESTIONATION_ID* is optional. It can be either link or ID to where you wish to store a particular clone." \
-            "\n\nYou can also *ignore folders* from clone process by doing the following:\n" \
-                "`/clone <FOLDER_ID> [DESTINATION] [id1,id2,id3]`\n In this example: id1, id2 and id3 would get ignored from cloning\nDo not use <> or [] in actual message." \
-                    "*Make sure to not put any space between commas (,).*\n" \
+    sendMessage("SA သုံးပါက Source Drive နှင့် ကူးမည့်မိမိShareDrive တိုတွင် group mail ကို contributor အဖြစ် add ထားမှ ကူးလိုရမှာပါ။ addနည်းကို ဒီမှာကြည့်ပါ။https://tiny.one/dwtykxca\n\n" \
+        "*ကူးယူပုံမှာ* `/clone SourceLink DentinationFolderLink`\n*အရေးကြီးသတိပြုရန်* \n1. `/clone နောက်မှာ၁ခါ sourceLinkနောက်မှာတခါ *Space* ပါပါတယ်`\n2. `အဲ့ဒီလိုမဟုတ်ရင်code က အလုပ်လုပ်မည်မဟုတ်ပါ`" \
+            "\nအဆင်ပြေကြမယ်လို့ထင်ပါတယ်။" \
+            "\n\nservice accountတွေ ထည့်ထားလျှင် ဒေတာ Tb နဲ့ချီ ကူးလို့ရပါတယ်။\n" \
+                "`ထိုသို့ကူးနိုင်သည်မှာမှန်သော်လည်း`\nတစ်ရက်ထဲ အများကြိးကူးလိုက်ရင် limit ပြည့်သွားပါမယ်။" \
+                    "*ဒါကြောင့် တစ်ရက်ကို maximun 10-20Tb/day လောက်ပဲကူးသင့်ပါတယ်။*\n" \
                         f"Source of this bot: [GitHub]({REPO_LINK})", context.bot, update, 'Markdown')
 
 # TODO Cancel Clones with /cancel command.
@@ -67,9 +67,9 @@ def sendCloneStatus(update, context, status, msg, link):
     while not status.done():
         sleeper(3)
         try:
-            text=f'🔗 *Cloning:* [{status.MainFolderName}]({status.MainFolderLink})\n━━━━━━━━━━━━━━\n🗃️ *Current File:* `{status.get_name()}`\n⬆️ *Transferred*: `{status.get_size()}`\n📁 *Destination:* [{status.DestinationFolderName}]({status.DestinationFolderLink})'
+            text=f'⚜ *Origin* {status.MainFolderName}\n♦♦♦♦♦♦♦♦♦♦♦♦♦\n🗃️ *NowCloning* `{status.get_name()}`\n⏳ *Pass*: `{status.get_size()}`\n📁 *YourFolder* {status.DestinationFolderName}\n---❤▪▪▪▪▪▪▪❤---'
             if status.checkFileStatus():
-                text += f"\n🕒 *Checking Existing Files:* `{str(status.checkFileStatus())}`"
+                text += f"\n‼ *ရှိပြီးသားဖိုင်များကိုစစ်ဆေးခြင်း:* `{str(status.checkFileStatus())}`"
             if not text == old_text:
                 msg.edit_text(text=text, parse_mode="Markdown", timeout=200)
                 old_text = text
